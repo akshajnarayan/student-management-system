@@ -1,7 +1,24 @@
+def add_student():
+    print("----- Student Registration -----")
+    try:
+        name = input("Name : ")
+        roll_no = int(input("Roll number : "))
+        age = int(input("Age : "))
+        standard = int(input("Standard : "))
+        division = input("Division : ")
+    except ValueError:
+        print("\nPlease enter a numeric value!")
+    else:
+        if roll_no in students:
+            print("\nA student with this roll number already exists!")
+        else:
+            students[roll_no] = {"name":name.lower(), "age":age, "standard":standard, "division":division}
+            print("\nRegistered student details successfully.")
+
 students = {}
 
 while True:    
-    print("=========================================")
+    print("\n=========================================")
     print("\tStudent Management System\t")
     print("=========================================\n")
 
@@ -16,7 +33,8 @@ while True:
 
     match(choice):
         case '1':
-            pass
+            print()
+            add_student()
         case '2':
             pass
         case '3':
