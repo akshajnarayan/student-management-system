@@ -15,6 +15,19 @@ def add_student():
             students[roll_no] = {"name":name.lower(), "age":age, "standard":standard, "division":division}
             print("\nRegistered student details successfully.")
 
+def view_students():
+    if not students:
+        print("Sorry, no student data found!")
+        return
+    
+    print("----- Student Records -----\n")
+    for roll_no, details in students.items():
+        print("Roll number : ", roll_no)
+        print("Name : ", details["name"])
+        print("Age : ", details["age"])
+        print("Standard : ", details["standard"])
+        print("Division : ", details["division"], "\n")
+
 students = {}
 
 while True:    
@@ -36,7 +49,8 @@ while True:
             print()
             add_student()
         case '2':
-            pass
+            print()
+            view_students()
         case '3':
             pass
         case '4':
@@ -46,3 +60,5 @@ while True:
         case '6':
             print("\nTerminating program, Please wait...")
             break
+        case _:
+            print("Invalid choice! Try again.")
