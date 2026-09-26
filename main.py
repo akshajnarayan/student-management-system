@@ -118,6 +118,36 @@ def update_student():
         else:
             print("\nInvalid choice! Try again.")
 
+def remove_student():
+    print("----- Remove Student -----")
+    try:
+        roll_no = int(input("Enter the roll number of the student : "))
+    except ValueError:
+        print("\nPlease enter a numeric value!")
+        return
+
+    if roll_no not in students:
+        print("\nSorry, student not found!")
+        return
+
+    name, age, standard, division = details_of(roll_no)
+
+    print("\n--- Student Details ---")
+    print("Name : ", name.capitalize())
+    print("Roll Number : ", roll_no)
+    print("Age : ", age)
+    print("Standard : ", standard)
+    print("Division : ", division)
+
+    confirmation = input("\nProceed with the removal? (y/n) : ").strip().lower()
+    if confirmation in ('y', 'yes'):
+        del students[roll_no]
+        print("\nRemoved student details successfully.")
+    elif confirmation in ('n', 'no'):
+        print("\nAborting removal.")
+    else:
+        print("Invalid choice! Aborting removal.")
+
 students = {}
 
 while True:    
@@ -129,7 +159,7 @@ while True:
     print("2. View Students")
     print("3. Search Student")
     print("4. Update Student")
-    print("5. Delete Student")
+    print("5. Remove Student")
     print("6. Exit\n")
 
     choice = input("Enter your choice (1-6) : ")
@@ -148,7 +178,8 @@ while True:
             print()
             update_student()
         case '5':
-            pass
+            print()
+            remove_student()
         case '6':
             print("\nTerminating program, Please wait...")
             break
