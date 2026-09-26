@@ -1,18 +1,26 @@
+def details_of(rollno):
+    name = students[rollno]["name"]
+    age = students[rollno]["age"]
+    standard = students[rollno]["standard"]
+    division = students[rollno]["division"]
+
+    return name, age, standard, division
+
 def add_student():
     print("----- Student Registration -----")
     try:
-        name = input("Name : ")
+        name = input("Name : ").strip().lower()
         roll_no = int(input("Roll number : "))
         age = int(input("Age : "))
         standard = int(input("Standard : "))
-        division = input("Division : ")
+        division = input("Division : ").strip()
     except ValueError:
         print("\nPlease enter a numeric value!")
     else:
         if roll_no in students:
             print("\nA student with this roll number already exists!")
         else:
-            students[roll_no] = {"name":name.lower(), "age":age, "standard":standard, "division":division}
+            students[roll_no] = {"name":name, "age":age, "standard":standard, "division":division}
             print("\nRegistered student details successfully.")
 
 def view_students():
@@ -33,19 +41,82 @@ def search_student():
         print("Sorry, no student data found!")
         return
     try:
-        roll_no = int(input("Enter the roll number of the student:"))
+        roll_no = int(input("Enter the roll number of the student : "))
     except ValueError:
         print("\nPlease enter a numeric value!")
     else:
         if roll_no not in students:
             print("\nStudent not found!")
         else:
+            name, age, standard, division = details_of(roll_no)
             print("\n----- Student Details -----")
-            print("Name : ", students[roll_no]["name"].capitalize())
+            print("Name : ", name.capitalize())
             print("Roll Number : ", roll_no)
-            print("Age : ", students[roll_no]["age"])
-            print("Standard : ", students[roll_no]["standard"])
-            print("Division : ", students[roll_no]["division"])
+            print("Age : ", age)
+            print("Standard : ", standard)
+            print("Division : ", division)
+
+def update_student():
+    options = {
+        '1': ("name", str),
+        '2': ("age", int),
+        '3': ("standard", int),
+        '4': ("division", str)
+    }
+
+    print("----- Update Student -----")
+
+    try:
+        roll_no = int(input("Enter the roll number of the student : "))
+    except ValueError:
+        print("\nPlease enter a numeric value!")
+        return
+
+    if roll_no not in students:
+        print("\nSorry, student not found!")
+        return
+
+    name, age, standard, division = details_of(roll_no)
+
+    print("\n--- Existing Details ---")
+    print("Name : ", name.capitalize())
+    print("Roll Number : ", roll_no)
+    print("Age : ", age)
+    print("Standard : ", standard)
+    print("Division : ", division)
+
+    while True:
+        print("\n--- Update Student ---")
+        print("1. Name")
+        print("2. Age")
+        print("3. Standard")
+        print("4. Division")
+        print("5. Exit\n")
+
+        option = input("Enter your choice (1-5) : ")
+        print()
+
+        if option in ('1', '2', '3', '4'):
+            field, datatype = options[option]
+            try:
+                user_input = datatype(input(f"Enter {field} : "))
+            except ValueError:
+                print("\nPlease enter a numeric value!")
+            else:
+                if datatype == str:
+                    user_input = user_input.strip().lower()
+
+                if user_input == students[roll_no][field]:
+                    print(f"\n{field.capitalize()} is already set to that value.")
+                else:
+                    students[roll_no][field] = user_input
+
+                    print(f"\nUpdated {field} of student successfully.")
+        elif option == '5':
+            print("\nReturning to main menu ...")
+            break
+        else:
+            print("\nInvalid choice! Try again.")
 
 students = {}
 
@@ -74,7 +145,8 @@ while True:
             print()
             search_student()
         case '4':
-            pass
+            print()
+            update_student()
         case '5':
             pass
         case '6':
