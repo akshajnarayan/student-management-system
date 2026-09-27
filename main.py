@@ -1,3 +1,5 @@
+import json
+
 def details_of(rollno):
     name = students[rollno]["name"]
     age = students[rollno]["age"]
@@ -148,7 +150,14 @@ def remove_student():
     else:
         print("Invalid choice! Aborting removal.")
 
-students = {}
+def save_students():
+    with open("students.json", "w") as file:
+        json.dump(students, file, indent=2)
+
+with open("students.json", "r") as file:
+    students = json.load(file)
+
+students = {int(key):value for key, value in students.items()}
 
 while True:    
     print("\n=========================================")
@@ -168,6 +177,7 @@ while True:
         case '1':
             print()
             add_student()
+            save_students()
         case '2':
             print()
             view_students()
@@ -177,9 +187,11 @@ while True:
         case '4':
             print()
             update_student()
+            save_students()
         case '5':
             print()
             remove_student()
+            save_students()
         case '6':
             print("\nTerminating program, Please wait...")
             break
