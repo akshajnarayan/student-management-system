@@ -12,6 +12,7 @@ A terminal-based student management system built with Python.
 * Remove student records
 * Persistent data storage using JSON
 * Modular program structure
+* Basic terminal animations
 
 ## Project Structure
 
@@ -21,6 +22,7 @@ student-management-system/
 ├── ui.py
 ├── core.py
 ├── storage.py
+├── animations.py
 ├── students.json
 └── README.md
 ```
@@ -31,6 +33,7 @@ student-management-system/
 * **`ui.py`** — Handles user interaction, input collection, validation, and displaying information.
 * **`core.py`** — Contains the operations that manipulate student data.
 * **`storage.py`** — Handles loading and storing student records using JSON.
+* **`animations.py`** — Provides basic terminal animations, including spinners, loading indicators, progress bars, and changing status messages.
 * **`students.json`** — Stores student records between program runs.
 
 ## Data Storage

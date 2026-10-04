@@ -1,10 +1,20 @@
 import ui
+import time
 import storage
+import animations
 
+animations.import_data(texts=("Locating database", "Fetching student records", "Just a moment"))
 students = storage.load()
+
 if students is None:
-    print("\nFailed to import student records! : File Not Found")
+    print("Failed to import : Student records not found.")
     exit()
+
+print("Import successful.", end="", flush=True)
+
+time.sleep(1)
+print("\r\033[2K", end="")
+        
 
 while True:    
     print("\n=========================================")
@@ -37,6 +47,7 @@ while True:
             storage.store(students)
         case '6':
             print("\nTerminating program, Please wait...")
+            animations.progress_bar(filler="-", display="\n|----- End of program -----|")
             break
         case _:
             print("Invalid choice! Try again.")

@@ -1,4 +1,5 @@
 import core
+import animations
 
 def collect():
     name = input("Name : ").strip().lower()
@@ -29,14 +30,16 @@ def add_student(students):
     if roll_no in students:
         print("\nA student with this roll number already exists!")
         return
-    
+
+    animations.spinner(text="Saving student details", end="")
     core.add_student(students, roll_no, name, age, standard, division)
     print("\nRegistered student details successfully.")
 
 def view_students(students):
     print("\n----- Student Records -----\n")
+    animations.loading(text="Loading students data", loop=1, dots=5, end="")
     if not students:
-        print("\nSorry, no student data found!")
+        print("Sorry, no student data found!")
         return
     
     for roll_no in students:
@@ -44,12 +47,14 @@ def view_students(students):
 
 def search_student(students):
     print("\n----- Search Student -----")
+    animations.loading(text="Loading students data", loop=1, dots=5, end="")
     if not students:
         print("\nSorry, no student data found!")
         return
 
     try:
         roll_no = int(input("Enter the roll number of the student : "))
+        animations.spinner(text="Fetching student details", end="")
     except ValueError:
         print("\nPlease enter a numeric value!")
         return
@@ -63,12 +68,14 @@ def search_student(students):
 
 def update_student(students):
     print("\n----- Update Student -----")
+    animations.loading(text="Loading students data", loop=1, dots=5, end="")
     if not students:
         print("\nSorry, no student data found!")
         return
     
     try:
         roll_no = int(input("Enter the roll number of the student : "))
+        animations.spinner(text="Fetching student details", end="")
     except ValueError:
         print("\nPlease enter a numeric value!")
         return
@@ -81,7 +88,7 @@ def update_student(students):
     print_details(students, roll_no)
 
     while True:
-        print("\n--- Update Student ---")
+        print("--- Update Student ---")
         print("1. Name")
         print("2. Age")
         print("3. Standard")
@@ -91,7 +98,7 @@ def update_student(students):
         option = input("Enter your choice (1-5) : ")
 
         if option == '5':
-            print("\nReturning to main menu ...")
+            animations.loading(text="Saving changes", display="\nReturning to main menu")
             return
         if option not in ('1', '2', '3', '4'):
             print("\nInvalid choice! Try again.")
@@ -109,16 +116,18 @@ def update_student(students):
                 print(f"\n{field.capitalize()} is already set to that value.")
             else:
                 core.update_student(option, students, roll_no, field_input, status="update")
-                print(f"\nUpdated {field} of student successfully.")
+                print(f"\nUpdated {field} of student successfully.\n")
 
 def remove_student(students):
     print("\n----- Remove Student -----")
+    animations.loading(text="Loading students data", loop=1, dots=5, end="")
     if not students:
         print("\nSorry, no student data found!")
         return
     
     try:
         roll_no = int(input("Enter the roll number of the student : "))
+        animations.spinner(text="Fetching student details", end="")
     except ValueError:
         print("\nPlease enter a numeric value!")
         return
@@ -133,6 +142,7 @@ def remove_student(students):
     confirmation = input("\nProceed with the removal? (y/n) : ").strip().lower()
     result = core.remove_student(students, roll_no, confirmation)
     if result:
+        animations.spinner(text="Removing student details", end="")
         print("\nRemoved student details successfully.")
     elif result is False:
         print("\nProcess cancelled. Aborting removal.")
