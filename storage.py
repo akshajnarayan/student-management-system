@@ -1,14 +1,14 @@
 import json
 
-def load():
+def load(filename="students.json"):
     try:
-        with open("students.json", "r") as file:
+        with open(f"data/{filename}", "r") as file:
             data = json.load(file)
     except FileNotFoundError: 
         return None
     else:
-        return {int(key):value for key, value in data.items()}
+        return {key:value for key, value in data.items()}
     
-def store(data):
-    with open("students.json", "w") as file:
+def store(data, filename="students.json"):
+    with open(f"data/{filename}", "w") as file:
         json.dump(data, file, indent=2)

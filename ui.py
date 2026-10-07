@@ -3,17 +3,17 @@ import animations
 
 def collect():
     name = input("Name : ").strip().lower()
-    roll_no = int(input("Roll number : "))
+    student_id = input("Student ID : ")
     age = int(input("Age : "))
     standard = int(input("Standard : "))
     division = input("Division : ").strip()
     
-    return roll_no, name, age, standard, division
+    return student_id, name, age, standard, division
 
-def print_details(students, roll_no):
-    name, age, standard, division = core.obtain(students, roll_no)
+def print_details(students, student_id):
+    name, age, standard, division = core.obtain(students, student_id)
     
-    print("Roll number : ", roll_no)
+    print("Student ID : ", student_id)
     print("Name : ", name.title())
     print("Age : ", age)
     print("Standard : ", standard)
@@ -22,18 +22,34 @@ def print_details(students, roll_no):
 def add_student(students):
     print("\n----- Student Registration -----")
     try:
-        roll_no, name, age, standard, division = collect()
+        student_id, name, age, standard, division = collect()
     except ValueError:
         print("\nPlease enter a numeric value!")
         return
+
+    if not student_id.isalnum():
+        print("\nInvalid ID! Special characters are not allowed.")
+        return
+
+    if student_id.isdigit():
+        print("\nInvalid ID! IDs must contain letters and numbers.")
+        return 
     
-    if roll_no in students:
-        print("\nA student with this roll number already exists!")
+    if not student_id.isupper():
+        print("\nInvalid ID! Inappropriate case.")
+        return
+
+    if any(char.isdigit() for char in name):
+        print("\nStudent name cannot contain integers.")
+        return
+
+    if student_id in students:
+        print("\nA student with this Student ID already exists!")
         return
 
     animations.spinner(text="Saving student details", end="")
-    core.add_student(students, roll_no, name, age, standard, division)
-    print("\nRegistered student details successfully.")
+    core.add_student(students, student_id, name, age, standard, division)
+    print("\nRegistered student successfully.")
 
 def view_students(students):
     print("\n----- Student Records -----\n")
@@ -42,8 +58,8 @@ def view_students(students):
         print("Sorry, no student data found!")
         return
     
-    for roll_no in students:
-        print_details(students, roll_no)
+    for student_id in students:
+        print_details(students, student_id)
 
 def search_student(students):
     print("\n----- Search Student -----")
@@ -52,19 +68,27 @@ def search_student(students):
         print("\nSorry, no student data found!")
         return
 
-    try:
-        roll_no = int(input("Enter the roll number of the student : "))
-        animations.spinner(text="Fetching student details", end="")
-    except ValueError:
-        print("\nPlease enter a numeric value!")
+    student_id = input("Enter the Student ID of the student : ")
+
+    if not student_id.isalnum():
+        print("\nInvalid ID! Special characters are not allowed.")
+        return
+
+    if student_id.isdigit():
+        print("\nInvalid ID! IDs must contain letters and numbers.")
         return
     
-    if roll_no not in students:
+    if not student_id.isupper():
+        print("\nInvalid ID! Inappropriate case.")
+        return
+
+    animations.spinner(text="Fetching student details", end="")
+    if student_id not in students:
         print("\nStudent not found!")
         return
     
     print("\n--- Student Details ---")
-    print_details(students, roll_no)
+    print_details(students, student_id)
 
 def update_student(students):
     print("\n----- Update Student -----")
@@ -73,19 +97,27 @@ def update_student(students):
         print("\nSorry, no student data found!")
         return
     
-    try:
-        roll_no = int(input("Enter the roll number of the student : "))
-        animations.spinner(text="Fetching student details", end="")
-    except ValueError:
-        print("\nPlease enter a numeric value!")
+    student_id = input("Enter the Student ID of the student : ")
+
+    if not student_id.isalnum():
+        print("\nInvalid ID! Special characters are not allowed.")
         return
-    
-    if roll_no not in students:
+
+    if student_id.isdigit():
+        print("\nInvalid ID! IDs must contain letters and numbers.")
+        return
+
+    if not student_id.isupper():
+        print("\nInvalid ID! Inappropriate case.")
+        return
+
+    animations.spinner(text="Fetching student details", end="")
+    if student_id not in students:
         print("\nSorry, student not found!")
         return
     
     print("\n--- Existing Details ---")
-    print_details(students, roll_no)
+    print_details(students, student_id)
 
     while True:
         print("--- Update Student ---")
@@ -109,13 +141,18 @@ def update_student(students):
             except ValueError:
                 print("\nPlease enter a numeric value!")
                 return 
+            
             if datatype == str:
                 field_input = field_input.strip().lower()
 
-            if field_input == students[roll_no][field]:
+            if field == "name" and any(char.isdigit() for char in field_input):
+                print("\nStudent name cannot contain integers.")
+                return 
+            
+            if field_input == students[student_id][field]:
                 print(f"\n{field.capitalize()} is already set to that value.")
             else:
-                core.update_student(option, students, roll_no, field_input, status="update")
+                core.update_student(option, students, student_id, field_input, status="update")
                 print(f"\nUpdated {field} of student successfully.\n")
 
 def remove_student(students):
@@ -125,22 +162,30 @@ def remove_student(students):
         print("\nSorry, no student data found!")
         return
     
-    try:
-        roll_no = int(input("Enter the roll number of the student : "))
-        animations.spinner(text="Fetching student details", end="")
-    except ValueError:
-        print("\nPlease enter a numeric value!")
+    student_id = input("Enter the Student ID of the student : ")
+
+    if not student_id.isalnum():
+        print("\nInvalid ID! Special characters are not allowed.")
         return
 
-    if roll_no not in students:
+    if student_id.isdigit():
+        print("\nInvalid ID! IDs must contain letters and numbers.")
+        return
+
+    if not student_id.isupper():
+        print("\nInvalid ID! Inappropriate case.")
+        return
+
+    animations.spinner(text="Fetching student details", end="")
+    if student_id not in students:
         print("\nSorry, student not found!")
         return
 
     print("\n--- Student Details ---")
-    print_details(students, roll_no)
+    print_details(students, student_id)
 
     confirmation = input("\nProceed with the removal? (y/n) : ").strip().lower()
-    result = core.remove_student(students, roll_no, confirmation)
+    result = core.remove_student(students, student_id, confirmation)
     if result:
         animations.spinner(text="Removing student details", end="")
         print("\nRemoved student details successfully.")

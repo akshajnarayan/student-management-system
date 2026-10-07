@@ -7,7 +7,7 @@ A terminal-based student management system built with Python.
 * Interactive menu-driven interface
 * Add student records
 * View all student records
-* Search students by roll number
+* Search students by student ID
 * Update student details
 * Remove student records
 * Persistent data storage using JSON
@@ -23,8 +23,9 @@ student-management-system/
 ├── core.py
 ├── storage.py
 ├── animations.py
-├── students.json
-└── README.md
+├── README.md
+└── data/
+    └── students.json
 ```
 
 ### Modules
@@ -34,11 +35,11 @@ student-management-system/
 * **`core.py`** — Contains the operations that manipulate student data.
 * **`storage.py`** — Handles loading and storing student records using JSON.
 * **`animations.py`** — Provides basic terminal animations, including spinners, loading indicators, progress bars, and changing status messages.
-* **`students.json`** — Stores student records between program runs.
+* **`data/students.json`** — Stores student records between program runs.
 
 ## Data Storage
 
-Student records are stored in `students.json`, allowing data to persist between program runs.
+Student records are stored in `data/students.json`, allowing data to persist between program runs.
 
 ## How to Run
 
